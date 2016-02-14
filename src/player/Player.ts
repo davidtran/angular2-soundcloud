@@ -9,6 +9,9 @@ import {ControlsCmp} from "./Controls.ts";
 import {VolumeCmp} from './Volume.ts';
 import {SongImageCmp} from './SongImage.ts';
 
+import {TimeSeekerCmp} from './timeSeeker/TimeSeeker.ts';
+import {TimeInfoCmp} from './TimeInfo.ts';
+
 @Component({
 	selector: 'player',
 	template: `
@@ -26,6 +29,20 @@ import {SongImageCmp} from './SongImage.ts';
 					</div>
 					<div class='pull-right'>
 						<volume></volume>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-xs-12">
+				<div class="row">
+					<div class="col-xs-12">
+						<time-info [song]="song" [time]="currentTime" [total-time]="totalTime"></time-info>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-xs-12">
+						<time-seeker [time]="currentTime" [total-time]="totalTime"></time-seeker>
 					</div>
 				</div>
 			</div>
@@ -73,21 +90,21 @@ import {SongImageCmp} from './SongImage.ts';
 		outline: none;
 	}
 	`],
-	directives:[NgIf, ControlsCmp, VolumeCmp, SongImageCmp]
+	directives:[NgIf, ControlsCmp, VolumeCmp, SongImageCmp, TimeSeekerCmp, TimeInfoCmp]
 })
 export class PlayerCmp implements OnInit {
 	public song: Song;
 	private isPlaying: boolean;
 	private currentTime: number;
-
+	private totalTime: number;
 	private soundManager: SoundManager;
 
 	constructor(soundManager: SoundManager) {
 		this.song = null;
 		this.soundManager = soundManager;
 		this.soundManager.on(Events.ChangeSong, (song) => {
-			console.log(song);
 			this.song = song;
+			this.totalTime = this.soundManager.getTotalTime();
 		});
 	}
 
@@ -104,6 +121,10 @@ export class PlayerCmp implements OnInit {
 			this.isPlaying = true;
 		});
 
+		this.soundManager.on(Events.Time, (time) => {
+			this.currentTime = time;
+			this.totalTime = this.soundManager.getTotalTime();
+		});
 	}
 
 }

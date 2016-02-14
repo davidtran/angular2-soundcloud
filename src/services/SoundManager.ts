@@ -63,7 +63,9 @@ export class SoundManager {
 
 	previous() {
 		var song = this.playlistService.previous();
-		if (song) this.play(song);
+		if (song) {
+			this.play(song);
+		}
 	}
 
 	seek(time: number) {
@@ -86,6 +88,13 @@ export class SoundManager {
 		}
 	}
 
+	getTotalTime() {
+		if (this.soundPlayer && this.currentSong) {
+			return this.soundPlayer.totalTime();
+		}
+		return null;
+	}
+
 	on(event, handler: any) {
 		if (!this.subscribers[event]) this.subscribers[event] = [];
 		this.subscribers[event].push(handler);
@@ -104,34 +113,57 @@ export class SoundManager {
 		return this.currentSong;
 	}
 
+	onSongFinish() {
+		var nextSong = this.playlistService.next();
+		if (nextSong) {
+			this.play(nextSong);
+		}	else {
+			this.publish(Events.Finish, null);
+		}
+	}
+
 	subscribSoundPlayerEvent(soundPlayer: ISoundPlayer) {
+
 		soundPlayer.on(Events.Play, () => {
 			this.publish(Events.Play, null);
 			this.isPlaying = true;
 		});
+
 		soundPlayer.on(Events.PlayStart, () => {
 			this.publish(Events.PlayStart, null);
 			this.isPlaying = true;
 		});
+
 		soundPlayer.on(Events.PlayResume, () => {
 			this.publish(Events.PlayResume, null);
 			this.isPlaying = true;
 		});
+
 		soundPlayer.on(Events.Pause, () => {
 			this.publish(Events.Pause, null);
 			this.isPlaying = false;
 		});
+
 		soundPlayer.on(Events.Finish, () => {
 			this.publish(Events.Finish, null);
 			this.isPlaying = false;
+			//this.onSongFinish();
 		});
+
 		soundPlayer.on(Events.Seek, () => this.publish(Events.Seek, null));
+
 		soundPlayer.on(Events.Seeked, () => this.publish(Events.Seeked, null));
-		soundPlayer.on(Events.Time, () => this.publish(Events.Time, null));
+
+		soundPlayer.on(Events.Time, (time) => {
+			this.publish(Events.Time, time);
+		});
+
 		soundPlayer.on(Events.AudioError, () => {
 			this.publish(Events.AudioError, null);
 			this.isPlaying = false;
 		});
+
 		soundPlayer.on(Events.NoStreams, () => this.publish(Events.NoStreams, null));
+
 	}
 }

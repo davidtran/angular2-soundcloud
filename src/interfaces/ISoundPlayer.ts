@@ -6,7 +6,8 @@ export interface ISoundPlayer {
 	pause: () => void;
 	seek: (time: number) => void;
 	currentTime: () => number;
+	totalTime: () => number;
 	setVolume: (value: number) => void;
 	getVolume: () => number;
-	on: (event: number, handler: () => void) => void;
+	on: (event: number, handler: (data: any) => void) => void;
 }

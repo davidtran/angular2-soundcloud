@@ -30,7 +30,10 @@ export class SoundManagerSoundPlayer implements ISoundPlayer {
 				onplay: () => this.publish(Events.Play, null),
 				onresume: () => this.publish(Events.PlayResume, null),
 				onstop: () => this.publish(Events.Finish, null),
-				whileplaying: () => this.publish(Events.Time, null),
+				whileplaying: () => {
+					var time = this.currentTime();
+					this.publish(Events.Time, time)
+				},
 			});
 
 			if (!soundObject) {
@@ -42,7 +45,7 @@ export class SoundManagerSoundPlayer implements ISoundPlayer {
 
 		soundObject.play();
 		this.soundObject = soundObject;
-		callback(null, song);
+		return callback(null, song);
 	}
 
 	play() {
@@ -57,8 +60,9 @@ export class SoundManagerSoundPlayer implements ISoundPlayer {
 		}
 	}
 
-	seek(time: number) {
+	seek(percent: number) {
 		if (this.soundObject) {
+			var time = this.soundObject.duration * percent / 100;
 			this.soundObject.setPosition(time);
 		}
 	}
@@ -66,6 +70,11 @@ export class SoundManagerSoundPlayer implements ISoundPlayer {
 	currentTime(): number {
 		if (!this.soundObject) return;
 		return this.soundObject.position;
+	}
+
+	totalTime():number {
+		if (!this.soundObject) return;
+		return this.soundObject.duration;
 	}
 
 	setVolume(value: number) {

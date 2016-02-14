@@ -10,7 +10,7 @@ import {SoundManager} from "../services/SoundManager.ts";
 	<div class="row song-item">
 		<div class="col-xs-3 song-list-avatar-column">
 			<img class="playlist-item-image"
-					[src]="song.imageUrl"
+					[src]="getSongImage(song)"
 					[width]="35"
 					(click)='play(song)'
 					title="Play"/>
@@ -100,6 +100,7 @@ import {SoundManager} from "../services/SoundManager.ts";
 				width: 20px;
 				height: 20px;
 		}
+
 		.icon-share {
 				background-image: url(/images/icon-share.png);
 				background-size: 20px;
@@ -121,15 +122,18 @@ import {SoundManager} from "../services/SoundManager.ts";
 				height: 20px;
 		}
 		.icon-add {
-				background-image: url(/images/icon-add.png);
-				background-size: 20px;
-				width: 20px;
-				height: 20px;
+			background-image: url(/images/icon-add.png);
+			background-size: 20px;
+			width: 20px;
+			height: 20px;
 		}
+
 		.playlist-item-image{
-				width: 60px;
-				cursor: pointer;
-		}`],
+			width: 60px;
+			cursor: pointer;
+			border-radius: 5px;
+		}
+		`],
 	directives: [NgIf]
 })
 export class SongItemCmp
@@ -159,6 +163,13 @@ export class SongItemCmp
 
 	delete(song) {
 		this.playlistService.remove(song);
+	}
+
+	getSongImage(song: Song) {
+		if (song.imageUrl != null) {
+			return song.imageUrl;
+		}
+		return '/images/artist_placeholder.png';
 	}
 
 }
