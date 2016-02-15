@@ -1,20 +1,24 @@
 import {Song} from '../interfaces/Song.ts';
 import {Injectable} from 'angular2/core';
-
+import {Subject} from 'rxjs/Subject';
+import {Observable} from 'rxjs/Observable';
 import {LocalStorage} from './LocalStorage.ts';
-
+import * as Rx from 'rxjs/Rx';
 @Injectable()
 export class PlaylistService {
 	private _data: Song[];
 	private _subscribers: any[];
 	private currentSongIndex = -1;
+	private $dataObservable;
+	private $source;
 
 	constructor(private localStorageService: LocalStorage) {
+		this.$dataObservable = null;
 		this._data = this.localStorageService.getObject('playlist_data');
 		if (null == this._data) {
 			this._data = [];
 		}
-		this._subscribers = [];
+		this.$source = this._createDataObservable();
 	}
 
 	add(song: Song) {
@@ -66,18 +70,16 @@ export class PlaylistService {
 		}
 	}
 
-	getAll() {
-		return this._data;
+	getAll(): Observable<Array<Song>> {
+		return this.$source;
 	}
 
-	onChange(callback: (data: Song[]) => void) {
-		this._subscribers.push(callback);
+	private _createDataObservable() {
+		return Rx.Observable.create(observer => this.$dataObservable = observer).share();
 	}
 
-	private publishChanges() {
-		this._subscribers.forEach(callback => {
-			callback(this._data);
-		});
+	publishChanges() {
+		this.$dataObservable.next(this._data);
 	}
 
 	private syncWithLocalStorage() {

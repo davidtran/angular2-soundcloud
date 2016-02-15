@@ -7,12 +7,12 @@ export class SearchFactory {
 	constructor(private soundCloudSearch: SoundCloudSearch) {
 
 	}
-	public buildSearchClient(provider) : ISearch {
-		console.log(provider);
+
+	public getSearchClient(provider) : ISearch {
 		if (provider == 1) {
-			console.log(1);
 			return this.soundCloudSearch;
 		}
 		return null;
 	}
+
 }

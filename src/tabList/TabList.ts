@@ -102,12 +102,7 @@ export class TabListCmp {
 	isShowPlaylist = false;
 
 	constructor(private playlistService: PlaylistService) {
-		if (this.playlistService.getAll().length > 0) {
-			this.showPlaylist();
-		} else {
-			this.showSearchList();
-		}
-
+		this.showSearchList();
 	}
 
 	showPlaylist() {

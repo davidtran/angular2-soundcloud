@@ -65,11 +65,11 @@ export class SearchBoxCmp implements OnInit {
 
 	constructor(searchFactory: SearchFactory) {
 		this.searchFactory = searchFactory;
-		this.searchClient = this.searchFactory.buildSearchClient(1);
+		this.searchClient = this.searchFactory.getSearchClient(1);
 
 		this.keyword
 					.valueChanges
-					.debounceTime(300)
+					.debounceTime(400)
 					.distinctUntilChanged()
 					.flatMap(keywordStr => this.searchClient.search(keywordStr.toString()))
 					.subscribe(data => {

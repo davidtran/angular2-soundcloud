@@ -147,7 +147,7 @@ export class SoundManager {
 		soundPlayer.on(Events.Finish, () => {
 			this.publish(Events.Finish, null);
 			this.isPlaying = false;
-			//this.onSongFinish();
+			this.onSongFinish();
 		});
 
 		soundPlayer.on(Events.Seek, () => this.publish(Events.Seek, null));

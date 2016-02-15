@@ -22,14 +22,16 @@ export class PlaylistCmp implements OnInit{
 	private data: Array<any>;
 
 	constructor(private playlistService: PlaylistService) {
-		this.data = this.playlistService.getAll();
+		this.playlistService
+				.getAll()
+				.subscribe(playlistData => {
+					this.data = playlistData;
+				});
+		this.playlistService.publishChanges();
 	}
 
 	ngOnInit() {
-		this.playlistService.onChange((data) => {
-			console.log(data);
-			this.data = data;
-		});
+
 	}
 
 }

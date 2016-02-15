@@ -9,13 +9,17 @@ import {Events} from '../interfaces/Events.ts';
 export class SoundManagerSoundPlayer implements ISoundPlayer {
 	private soundObject: any;
 	private subscribers: Object = {};
-
+	private lastSong: Song;
 	constructor() {
 
 	}
 
 	initialize(song: Song, callback: (e: Error, data: any) => void) {
-		soundManager.stopAll();
+		if (this.lastSong) {
+			soundManager.unload(this.lastSong.idFromProvider);
+			soundManager.destroySound(this.lastSong.idFromProvider);
+		}
+
 		var soundObject = soundManager.getSoundById(song.id);
 		if (!soundObject) {
 			soundObject = soundManager.createSound({
@@ -40,7 +44,7 @@ export class SoundManagerSoundPlayer implements ISoundPlayer {
 				return callback(new Error('Error while create sound'), null);
 			}
 
-
+			this.lastSong = song;
 		}
 
 		soundObject.play();
