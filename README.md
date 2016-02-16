@@ -1,29 +1,33 @@
-# angular2-soundcloud
-
-Sound Cloud Music player made by Angular2
+# Angular 2 Sound Cloud player
+A simple music player made by Angular 2
 
 ## Introduction
-The best way of learning is doing something. So this music player is made so I can learn better about Angular 2. When
- making this app. I learn a lot of new structure of Angular 2, dependency injection and Typescript. Angular 2 is great, their component structure make
- it easy to create webapp then ever. With Angular 2, we can forget about controller, $scope, module and many complicated concepts in AngularJS. Right now we can
- focus on create a well maintain and better performance app.
-
-Typescript is a great tool too. If you already know C# then you can fall in love with Typescript. With Typescript we can create class, interface and we take advantage of autocomplete in text editor.
-My favorite text editor is VS Code which is fully support for Typescript.
+Angular 2 is just coming out. This product is a demo product by myself with Angular 2. Through this product, we can learn more about:
+- Using Typescript in Angular 2
+- Dependency injection
+- Angular 2 component communication
+- RxJS pattern
 
 ## Features
+Currently, it just have some simple features:
 - Search music on SoundCloud
 - Play, pause, toggle volume
 - Add song to playlist
 
 ## Todos
-- Add time slider
-- Use Observable to update data instead of callback
 - Convert this app to a Google Chrome extension
+- Add more unit test
 
-## Usage
-Feel free to use this source code in your own project.
+## How to use ?
+- git clone https://github.com/davidtran/angular2-soundcloud
+- npm install
+- npm start
 
 ## Author
 Nam Tran <nam.trankhanh.vn@gmail.com>
+
 Website: http://jslancer.com
+
+## License
+MIT
+
