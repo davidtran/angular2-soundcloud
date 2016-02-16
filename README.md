@@ -23,6 +23,9 @@ Currently, it just have some simple features:
 - npm install
 - npm start
 
+## Known issues:
+- Sometimes SoundCloud api returns Access-Control-Allow-Origin, just need to refresh website few times. I will fix this issue later.
+
 ## Author
 Nam Tran <nam.trankhanh.vn@gmail.com>
 
