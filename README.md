@@ -1,6 +1,8 @@
 # Angular 2 Sound Cloud player
 A simple music player made by Angular 2
 
+**Live demo: http://davidtran.github.io/ng2music/**
+
 ## Introduction
 Angular 2 is just coming out. This product is a demo product by myself with Angular 2. Through this product, we can learn more about:
 - Using Typescript in Angular 2
@@ -9,8 +11,6 @@ Angular 2 is just coming out. This product is a demo product by myself with Angu
 - RxJS pattern
 
 ![Angular 2 Sound Cloud music player](http://i.imgur.com/pc0BBn7.png?1)
-
-DEMO: http://davidtran.github.io/ng2music/
 
 ## Features
 Currently, it just have some simple features:
