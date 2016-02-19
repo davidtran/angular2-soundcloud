@@ -8,6 +8,10 @@ Angular 2 is just coming out. This product is a demo product by myself with Angu
 - Angular 2 component communication
 - RxJS pattern
 
+![Angular 2 Sound Cloud music player](http://i.imgur.com/pc0BBn7.png?1)
+
+DEMO: http://davidtran.github.io/ng2music/
+
 ## Features
 Currently, it just have some simple features:
 - Search music on SoundCloud
